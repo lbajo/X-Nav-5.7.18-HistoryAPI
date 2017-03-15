@@ -1,3 +1,8 @@
+/*
+  mientras modifico -> http://localhost:8000/gallery/
+  cuando lo entregue -> http://lbajo.github.io/X-Nav-5.7.18-HistoryAPI/gallery/
+ */
+
 function supports_history_api() {
   return !!(window.history && history.pushState);
 }
@@ -5,7 +10,7 @@ function supports_history_api() {
 function swapPhoto(href) {
   var req = new XMLHttpRequest();
   req.open("GET",
-           "http://gsyc.es/~grex/history_api/gallery/" +
+           "http://lbajo.github.io/X-Nav-5.7.18-HistoryAPI/gallery/" +
              href.split("/").pop(),
            false);
   req.send(null);
@@ -32,12 +37,13 @@ function setupHistoryClicks() {
 }
 
 window.onload = function() {
-  if (!supports_history_api()) { return; }
-  setupHistoryClicks();
-  window.setTimeout(function() {
-    window.addEventListener("popstate", function(e) {
-      swapPhoto(location.pathname);
-    }, false);
-  }, 1);
+  if(Modernizr.history){
+    setupHistoryClicks();
+    window.setTimeout(function() {
+      window.addEventListener("popstate", function(e) {
+        swapPhoto(location.pathname);
+      }, false);
+    }, 1);
+  }
 }
 
